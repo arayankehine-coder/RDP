@@ -25,8 +25,9 @@ jobs:
           net localgroup administrators RDP /add
           echo "RDP_PASS=$pass" >> $env:GITHUB_ENV
 
-      - name: Install Tailscale
-        shell: pwsh
-        run: |
-          Invoke-WebRequest https://pkgs.tailscale.com/stable/tailscale-setup-1.82.0-amd64.msi -OutFile ts.msi
-          Start-Process m
+      - - name: Install Tailscale
+  shell: pwsh
+  run: |
+    Invoke-WebRequest https://pkgs.tailscale.com/stable/tailscale-setup-1.82.0-amd64.msi -OutFile ts.msi
+    Start-Process -FilePath "msiexec.exe" -ArgumentList "/i ts.msi /quiet /norestart" -Wait
+
